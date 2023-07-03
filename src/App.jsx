@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
+import api from "./assets/request";
+import InputMask from "react-input-mask";
 
 function App() {
-  const [cep, setCep] = useState('');
+  const [cep, setCep] = useState("");
+  const [resultado, setResultado] = useState("");
 
-  const handleCepChange = (event) => {
-    let value = event.target.value;
-    value = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    value = value.replace(/^(\d{5})(\d)/, '$1-$2'); // Adiciona o hífen depois dos primeiros 5 dígitos
-
-    setCep(value);
+  const inputChange = (event) => {
+    setCep(event.target.value);
   };
+
+  function consulta(cep) {
+    api(cep).then((resposta) => setResultado(resposta.data));
+  }
 
   return (
     <div>
@@ -17,16 +20,30 @@ function App() {
       <h2 id="textoLegenda">Projeto para Consulta de CEP usando React</h2>
       <span id="spanCep">CEP</span>
       <div id="inputCep">
-        <input
+        <InputMask
           type="text"
-          name="cep"
-          value={cep}
-          onChange={handleCepChange}
+          id="cep"
+          mask={"99999-999"}
           placeholder="Digite o CEP"
-          maxLength='9'
+          onChange={inputChange}
         />
-        <strong>Cidade</strong>
-        <span>Teodoro Sampaio - SP</span>
+        <input
+          type="button"
+          value="Consultar"
+          id="consulta"
+          onClick={() => consulta(cep)}
+        />
+        <strong>RESULTADO</strong>
+        {resultado && (
+          <div>
+            {Object.keys(resultado).map((chave) => (
+              <div key={chave}>
+                {resultado[chave] !== "" ? <strong>{chave.toUpperCase()}: </strong> : ""} 
+                {resultado[chave]}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

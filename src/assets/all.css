@@ -14,19 +14,28 @@
   -webkit-text-size-adjust: 100%;
 }
 
-#textoCep, #textoLegenda, #spanCep,#inputCep{
+#textoCep,
+#textoLegenda,
+#spanCep,
+#inputCep {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
 }
-input{
-  width: 10%;
+#cep {
+  width: 5%;
   margin: 5px;
   padding: 5px;
   text-align: center;
 }
-h1{
-  margin-top: 200px;
 
+#consulta {
+  width: 5%;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+}
+h1 {
+  margin-top: 50px;
 }
